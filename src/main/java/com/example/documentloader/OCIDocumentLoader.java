@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,7 +37,7 @@ public class OCIDocumentLoader {
                         log.error("Failed to retrieve object {} text from bucket {}", bucket, o, e);
                         return null;
                     }
-                });
+                }).filter(Objects::nonNull);
     }
 
     private String getObjectText(String bucket, String key) throws IOException {
