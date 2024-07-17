@@ -3,6 +3,7 @@ package com.example.embeddingmodel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.example.model.Embedding;
 import com.oracle.bmc.generativeaiinference.GenerativeAiInference;
@@ -58,7 +59,7 @@ public class OCIEmbeddingModel {
         for (List<String> batch : batches) {
             EmbedTextRequest embedTextRequest = toEmbedTextRequest(batch);
             EmbedTextResponse response = aiClient.embedText(embedTextRequest);
-            embeddings.addAll(toEmbeddings(response));
+            embeddings.addAll(toEmbeddings(response, batch));
         }
         return embeddings;
     }
@@ -82,16 +83,16 @@ public class OCIEmbeddingModel {
         return EmbedTextRequest.builder().embedTextDetails(embedTextDetails).build();
     }
 
-    private List<Embedding> toEmbeddings(EmbedTextResponse response) {
-        return response.getEmbedTextResult()
-                .getEmbeddings()
-                .stream()
-                .map(e -> {
+    private List<Embedding> toEmbeddings(EmbedTextResponse response, List<String> batch) {
+        List<List<Float>> embeddings = response.getEmbedTextResult().getEmbeddings();
+        return IntStream.range(0, embeddings.size())
+                .mapToObj(i -> {
+                    List<Float> e = embeddings.get(i);
                     float[] vector = new float[e.size()];
-                    for (int i = 0; i < e.size(); i++) {
-                        vector[i] = e.get(i);
+                    for (int j = 0; j < e.size(); j++) {
+                        vector[j] = e.get(j);
                     }
-                    return new Embedding(vector, "");
+                    return new Embedding(vector, batch.get(i));
                 })
                 .collect(Collectors.toList());
     }
