@@ -11,14 +11,14 @@
     <version>1.0.0</version>
 
     <properties>
-        <oracle.version>23.4.0.24.05</oracle.version>
-        <oci.sdk.version>3.44.2</oci.sdk.version>
+        <oracle.version>23.5.0.24.07</oracle.version>
+        <oci.sdk.version>3.52.1</oci.sdk.version>
         <lombok.version>1.18.32</lombok.version>
-        <junit.version>5.10.2</junit.version>
-        <assertj.version>3.26.0</assertj.version>
-        <testcontainers.version>1.19.8</testcontainers.version>
-        <log4j2.version>2.23.1</log4j2.version>
-        <langchain4j.version>0.31.0</langchain4j.version>
+        <junit.version>5.11.3</junit.version>
+        <assertj.version>3.26.3</assertj.version>
+        <testcontainers.version>1.20.3</testcontainers.version>
+        <log4j2.version>2.24.1</log4j2.version>
+        <langchain4j.version>0.35.0</langchain4j.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
